@@ -1,27 +1,22 @@
 import { useState } from "react";
 import { Header } from "./Header";
 import { Form } from "./Form";
-import { TransactionList } from "./TransactionList.js";
-import { Summary } from "./Summary.js";
+import { TransactionList } from "./TransactionList";
+import { Summary } from "./Summary";
 
 export default function App() {
   const [transactions, setTransactions] = useState([]);
 
   const totalIncome = transactions
     .filter((t) => t.type === "income")
-    .reduce((acc, t) => {
-      return +t.amount + acc;
-    }, 0);
+    .reduce((acc, t) => +t.amount + acc, 0);
 
   const totalExpense = transactions
     .filter((t) => t.type === "expense")
-    .reduce((acc, t) => {
-      return +t.amount + acc;
-    }, 0);
+    .reduce((acc, t) => +t.amount + acc, 0);
+
   const balance = totalIncome - totalExpense;
-  console.log(totalExpense);
-  console.log(totalIncome);
-  console.log(balance);
+
   return (
     <div className="container">
       <Header />
@@ -41,7 +36,11 @@ export default function App() {
               />
             </>
           ) : (
-            <p id="status">No records yet 📭</p>
+            <div className="transaction-card">
+              <div className="empty-state">
+                <p>No transactions yet. Add one to get started.</p>
+              </div>
+            </div>
           )}
         </div>
       </div>

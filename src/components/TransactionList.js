@@ -1,26 +1,36 @@
 export function TransactionList({ transactions, setTransactions }) {
-  function handleDeleteTransaction(e) {
-    const id = e.target.dataset.id;
-    console.log(id);
+  function handleDeleteTransaction(id) {
     setTransactions(transactions.filter((t) => t.id !== id));
   }
+
   return (
-    <div className="transaction-container">
-      <h2>Transactions 📋</h2>
-      {transactions.map((transaction) => (
-        <div className="transaction" key={transaction.description}>
-          <p>{transaction.description}</p>
-          <p>{transaction.type}</p>
-          <p>{transaction.amount}</p>
-          <button
-            className="delete-transaction"
-            data-id={transaction.id}
-            onClick={handleDeleteTransaction}
+    <div className="transaction-card">
+      <h2>Transactions</h2>
+      <div className="transaction-list">
+        {transactions.map((transaction) => (
+          <div
+            className={`transaction-item ${transaction.type}`}
+            key={transaction.id}
           >
-            ❌
-          </button>
-        </div>
-      ))}
+            <span className="transaction-desc">
+              {transaction.description}
+            </span>
+            <span className={`transaction-type ${transaction.type}`}>
+              {transaction.type}
+            </span>
+            <span className={`transaction-amount ${transaction.type}`}>
+              &#8358;{Number(transaction.amount).toLocaleString()}
+            </span>
+            <button
+              className="delete-btn"
+              onClick={() => handleDeleteTransaction(transaction.id)}
+              title="Delete transaction"
+            >
+              &#10005;
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

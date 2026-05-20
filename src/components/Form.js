@@ -7,7 +7,7 @@ export function Form({ setTransactions }) {
 
   function handleAddTransaction(e) {
     e.preventDefault();
-    if (!description || !amount) return alert("Kindly fill this in ✍️");
+    if (!description || !amount) return;
     const transaction = {
       id: crypto.randomUUID(),
       description,
@@ -20,37 +20,40 @@ export function Form({ setTransactions }) {
     setAmount("");
     setType("income");
   }
-  return (
-    <form className="form">
-      <div>
-        <label>Transaction Description 💬</label>
-        <input
-          type="text"
-          placeholder="Rent, Salary 💰"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Amount 💵</label>
-        <input
-          type="number"
-          placeholder="₦2500"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Type 📂</label>
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="income">Income 💰</option>
-          <option value="expense">Expense 💸</option>
-        </select>
-      </div>
 
-      <button className="btn-add" onClick={handleAddTransaction}>
-        Add Transaction ➕
-      </button>
-    </form>
+  return (
+    <div className="form-card">
+      <h2>New Transaction</h2>
+      <form className="form" onSubmit={handleAddTransaction}>
+        <div className="form-group">
+          <label>Description</label>
+          <input
+            type="text"
+            placeholder="e.g. Rent, Salary"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Amount</label>
+          <input
+            type="number"
+            placeholder="0.00"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Type</label>
+          <select value={type} onChange={(e) => setType(e.target.value)}>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+        <button className="btn-add" type="submit">
+          Add Transaction
+        </button>
+      </form>
+    </div>
   );
 }
